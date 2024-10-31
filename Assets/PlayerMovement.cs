@@ -20,7 +20,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float moveInput = Input.GetAxis("Horizontal");
+        // Get movement input from A and D keys only
+        float moveInput = 0f;
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveInput = -1f;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            moveInput = 1f;
+        }
+        
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
         // Flip the player based on movement direction
@@ -33,18 +43,20 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
+        // Jumping with W key
         if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumps)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount++;
         }
 
+        // Reset jump count when touching the ground
         if (rb.velocity.y == 0)
         {
             jumpCount = 0;
         }
 
-        // Handle weapon pickup
+        // Handle weapon pickup with E key
         if (Input.GetKeyDown(KeyCode.E) && weaponInRange != null)
         {
             PickupWeapon();
@@ -54,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
     private void Flip()
     {
         facingRight = !facingRight;
-
         transform.Rotate(0f, 180f, 0f);
     }
 
