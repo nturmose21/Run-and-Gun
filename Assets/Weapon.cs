@@ -7,15 +7,14 @@ public class Weapon : MonoBehaviour
     public Transform FirePoint;
     public GameObject bulletPrefab;
 
-
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        // Check for Q key press to shoot
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Shoot();
         }
     }
-
 
     void Shoot()
     {
