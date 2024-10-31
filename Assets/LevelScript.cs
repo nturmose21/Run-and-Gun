@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Enemy : MonoBehaviour
+public class LevelScript : MonoBehaviour
 {
+    public int health = 100; // Set initial health for the enemy
 
-    public int health = 100;
-    public GameObject deathEffect;
-
-    public void TakeDamage(int damage)
+    void Update()
     {
-        health -= damage;
+        CheckHealth();
+    }
 
+    void CheckHealth()
+    {
         if (health <= 0)
         {
-            Die();
             LoadNextLevel();
         }
     }
 
-    void Die()
+    public void TakeDamage(int damage)
     {
-        Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-        LoadNextLevel();
+        health -= damage;
     }
 
     void LoadNextLevel()
